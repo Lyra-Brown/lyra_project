@@ -1,4 +1,5 @@
 #include "lyra_lib/math_utils.hpp"
+#include <cstdint>
 
 // ---------- Conversion Functions ---------- //
 namespace Conversion
@@ -65,9 +66,9 @@ double get_minimum_double(double* arr, size_t size)
     return min_value;
 }
 
-int get_minimum_int(int* arr, size_t size) 
+int32_t get_minimum_int(int32_t* arr, size_t size) 
 {
-    int min_value = arr[0];
+    int32_t min_value = arr[0];
     for (size_t i = 1; i < size; ++i) 
     {
         if (arr[i] < min_value) 
@@ -76,6 +77,33 @@ int get_minimum_int(int* arr, size_t size)
         }
     }
     return min_value;
+}
+
+int32_t get_maximum_int(int32_t* arr, size_t size) 
+{
+    int32_t max_value = arr[0];
+    for (size_t i = 1; i < size; ++i) 
+    {
+        if (arr[i] > max_value) 
+        {
+            max_value = arr[i];
+        }
+    }
+    return max_value;
+}
+
+int8_t get_polarity_int32(int32_t value) 
+{
+    if (value > 0) return 1;
+    else if (value < 0) return -1;
+    else return 0;
+}
+
+int8_t get_polarity_float(float value) 
+{
+    if (value > 0.0f) return 1;
+    else if (value < 0.0f) return -1;
+    else return 0;
 }
 } // namespace MathConstants
 // ------------------------------------------ //

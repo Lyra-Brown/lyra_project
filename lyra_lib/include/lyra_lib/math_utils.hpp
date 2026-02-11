@@ -3,6 +3,7 @@
 
 #include "lyra_lib/visibility_control.h"
 #include <cmath>
+#include <cstdint>
 
 constexpr double TERA = 1.0e12;
 constexpr double GIGA = 1.0e9;
@@ -41,7 +42,10 @@ namespace MathConstants
 {
 LYRA_LIB_PUBLIC float get_minimum_float(float* arr, size_t size);
 LYRA_LIB_PUBLIC double get_minimum_double(double* arr, size_t size);
-LYRA_LIB_PUBLIC int get_minimum_int(int* arr, size_t size);
+LYRA_LIB_PUBLIC int32_t get_minimum_int(int32_t* arr, size_t size);
+LYRA_LIB_PUBLIC int32_t get_maximum_int(int32_t* arr, size_t size);
+LYRA_LIB_PUBLIC int8_t get_polarity_int32(int32_t value);
+LYRA_LIB_PUBLIC int8_t get_polarity_float(float value);
 }
 // ------------------------------------------ //
 
