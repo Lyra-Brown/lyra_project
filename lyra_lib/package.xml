@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>lyra_lib</name>
+  <version>1.0.0</version>
+  <description>Pure C++ logic library (PID, Kinematics)</description>
+  <maintainer email="unknown@gmail.com">laim</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>cmake</buildtool_depend>
+  
+  <export>
+    <build_type>cmake</build_type>
+  </export>
+</package>
