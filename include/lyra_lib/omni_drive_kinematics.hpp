@@ -2,12 +2,12 @@
 #define OMNI_DRIVE_KINEMATICS_HPP
 
 
-#include "aramr_lib/visibility_control.h"
+#include "lyra_lib/visibility_control.h"
 #include <array>
 #include <cstdint>
 
 
-class ARAMR_LIB_PUBLIC OmniDriveKinematics 
+class LYRA_LIB_PUBLIC OmniDriveKinematics 
 {
     public:
         OmniDriveKinematics(float wheel_radius, float robot_radius, float* robot_yaw, float* wheel_angles, uint8_t wheel_count);
