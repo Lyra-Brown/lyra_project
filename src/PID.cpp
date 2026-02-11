@@ -1,4 +1,4 @@
-#include "aramr_lib/PID.hpp"
+#include "lyra_lib/PID.hpp"
 
 
 PID::PID(double Kp, double Ki, double Kd) : Kp(Kp), Ki(Ki), Kd(Kd) {}

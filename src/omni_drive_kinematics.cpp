@@ -1,7 +1,7 @@
-#include "aramr_lib/omni_drive_kinematics.hpp"
+#include "lyra_lib/omni_drive_kinematics.hpp"
 
 #include <cmath>
-#include "aramr_lib/math_utils.hpp"
+#include "lyra_lib/math_utils.hpp"
 
 OmniDriveKinematics::OmniDriveKinematics(float wheel_radius, float robot_radius, float* robot_yaw, float* wheel_angles, uint8_t wheel_count)
     : robot_radius_(robot_radius),

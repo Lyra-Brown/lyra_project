@@ -1,4 +1,4 @@
-#include "aramr_lib/math_utils.hpp"
+#include "lyra_lib/math_utils.hpp"
 
 // ---------- Conversion Functions ---------- //
 namespace Conversion

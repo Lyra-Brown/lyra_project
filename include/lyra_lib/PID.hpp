@@ -1,7 +1,7 @@
 #ifndef PID_HPP
 #define PID_HPP
 
-#include "aramr_lib/visibility_control.h"
+#include "lyra_lib/visibility_control.h"
 
 
 class PID 
