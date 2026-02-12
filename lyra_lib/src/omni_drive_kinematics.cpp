@@ -22,7 +22,7 @@ void OmniDriveKinematics::set_robot_rot_velocity(float rot_velocity)
     robot_rot_vel_ = rot_velocity;
 }
 
-float OmniDriveKinematics::get_wheel_vel(uint8_t wheel_identifier)
+float OmniDriveKinematics::get_wheel_omega(uint8_t wheel_identifier)
 {
     output_wheel_omega_ = (1.0f / wheel_radius_) * 
     ( 

@@ -14,7 +14,7 @@ class LYRA_LIB_PUBLIC OmniDriveKinematics
 
         void set_robot_max_velocity(float max_velocity);
         void set_robot_rot_velocity(float rot_velocity);
-        float get_wheel_vel(uint8_t wheel_identifier);
+        float get_wheel_omega(uint8_t wheel_identifier);
 
     private:
         const float robot_radius_;
