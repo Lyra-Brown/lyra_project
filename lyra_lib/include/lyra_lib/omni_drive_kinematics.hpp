@@ -22,9 +22,8 @@ class LYRA_LIB_PUBLIC OmniDriveKinematics
         const uint8_t wheel_count_;
         const float* wheel_angles_;
 
-        float robot_max_velocity_ = 10.0; // [m/s]
+        float robot_max_velocity_ = 1.0; // [m/s]
         float robot_rot_vel_ = 2.0; // [rad/s]
-        float wheel_max_omega_ =  0; // [rad/s]
         float output_wheel_omega_ = 0.0; // [rad/s]
         float* robot_yaw_;
 };

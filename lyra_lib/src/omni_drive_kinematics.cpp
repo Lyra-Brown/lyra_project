@@ -10,14 +10,11 @@ OmniDriveKinematics::OmniDriveKinematics(float wheel_radius, float robot_radius,
       wheel_angles_(wheel_angles),
       robot_yaw_(robot_yaw)
 {
-    wheel_max_omega_ = (1.0f / wheel_radius_) * MathConstants::get_minimum_float(wheel_angles, wheel_count_);
-
 }
 
 void OmniDriveKinematics::set_robot_max_velocity(float max_velocity)
 {
     robot_max_velocity_ = max_velocity;
-    wheel_max_omega_ = (1.0f / wheel_radius_) * robot_max_velocity_;
 }
 
 void OmniDriveKinematics::set_robot_rot_velocity(float rot_velocity)
