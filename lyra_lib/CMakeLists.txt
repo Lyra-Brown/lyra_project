@@ -15,14 +15,19 @@ target_include_directories(lyra_general_lib PUBLIC
   $<INSTALL_INTERFACE:include>
 )
 
-install(TARGETS lyra_general_lib
-  EXPORT export_${PROJECT_NAME}
-  LIBRARY DESTINATION lib
-  ARCHIVE DESTINATION lib
-  RUNTIME DESTINATION bin
-)
-install(DIRECTORY include/ DESTINATION include)
+find_package(ament_cmake QUIET)
 
-find_package(ament_cmake REQUIRED)
-ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
-ament_package()
+if(ament_cmake_FOUND)
+  install(TARGETS lyra_general_lib
+    EXPORT export_${PROJECT_NAME}
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION bin
+  )
+  install(DIRECTORY include/ DESTINATION include)
+
+  ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
+  ament_package()
+else()
+  message(STATUS "lyra_lib: Building in Pure CMake mode (for STM32/etc.)")
+endif()
