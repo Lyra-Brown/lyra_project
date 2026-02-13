@@ -1,0 +1,1 @@
+#include "lyra_ros_lib/default_node.hpp"
