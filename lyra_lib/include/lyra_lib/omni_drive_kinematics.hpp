@@ -10,22 +10,21 @@
 class LYRA_LIB_PUBLIC OmniDriveKinematics 
 {
     public:
-        OmniDriveKinematics(float wheel_radius, float robot_radius, float* robot_yaw, float* wheel_angles, uint8_t wheel_count);
+        OmniDriveKinematics(float wheel_radius, float* from_center_distance, float* robot_yaw, float* wheel_angles, uint8_t wheel_count, float* world_x_vel, float* world_y_vel, float* robot_rot_vel);
 
-        void set_robot_max_velocity(float max_velocity);
-        void set_robot_rot_velocity(float rot_velocity);
         float get_wheel_omega(uint8_t wheel_identifier);
 
     private:
-        const float robot_radius_;
-        const float wheel_radius_;
-        const uint8_t wheel_count_;
-        const float* wheel_angles_;
+        const float wheel_radius;
+        const uint8_t wheel_count;
+        const float* wheel_angles;
+        const float* from_center_distance;
 
-        float robot_max_velocity_ = 1.0; // [m/s]
-        float robot_rot_vel_ = 2.0; // [rad/s]
         float output_wheel_omega_ = 0.0; // [rad/s]
-        float* robot_yaw_;
+        float* robot_yaw;
+        float* world_x_vel;
+        float* world_y_vel;
+        float* robot_rot_vel;
 };
 
 
