@@ -1,5 +1,0 @@
-#ifndef DEFAULT_NODE_HPP
-#define DEFAULT_NODE_HPP
-
-
-#endif // DEFAULT_NODE_HPP
