@@ -9,6 +9,7 @@ add_library(lyra_general_lib STATIC
   src/omni_drive_kinematics.cpp
   src/math_utils.cpp
   src/utils.cpp
+  src/CAN_tool.cpp
 )
 
 target_include_directories(lyra_general_lib PUBLIC
