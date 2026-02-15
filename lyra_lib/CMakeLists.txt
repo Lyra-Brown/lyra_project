@@ -8,6 +8,7 @@ add_library(lyra_general_lib STATIC
   src/PID.cpp
   src/omni_drive_kinematics.cpp
   src/math_utils.cpp
+  src/utils.cpp
 )
 
 target_include_directories(lyra_general_lib PUBLIC
