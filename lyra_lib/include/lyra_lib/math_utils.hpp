@@ -5,19 +5,21 @@
 #include <cmath>
 #include <cstdint>
 
-constexpr double TERA = 1.0e12;
-constexpr double GIGA = 1.0e9;
-constexpr double MEGA = 1.0e6;
-constexpr double KILO = 1.0e3;
-constexpr double HECTO = 1.0e2;
-constexpr double DECA = 1.0e1;
-constexpr double DECI = 1.0e-1;
-constexpr double CENTI = 1.0e-2;
-constexpr double MILLI = 1.0e-3;
-constexpr double MICRO = 1.0e-6;
-constexpr double NANO = 1.0e-9;
-constexpr double PICO = 1.0e-12;
-
+namespace Units
+{
+    inline constexpr double TERA = 1.0e12;
+    inline constexpr double GIGA = 1.0e9;
+    inline constexpr double MEGA = 1.0e6;
+    inline constexpr double KILO = 1.0e3;
+    inline constexpr double HECTO = 1.0e2;
+    inline constexpr double DECA = 1.0e1;
+    inline constexpr double DECI = 1.0e-1;
+    inline constexpr double CENTI = 1.0e-2;
+    inline constexpr double MILLI = 1.0e-3;
+    inline constexpr double MICRO = 1.0e-6;
+    inline constexpr double NANO = 1.0e-9;
+    inline constexpr double PICO = 1.0e-12;
+}
 
 // ---------- Conversion Functions ---------- //
 namespace Conversion
