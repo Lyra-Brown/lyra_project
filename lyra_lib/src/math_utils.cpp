@@ -14,26 +14,25 @@ double convertToDegree(double radian)
     return radian * 180.0 / M_PI;
 }
 
-Coordinate2d convertToRobotCoordinate2d(Coordinate2d *global_coordinate_vec, double robot_theta, Coordinate2d *robot_position_vec) 
+Coordinate2d convertToRobotCoordinate2d(const Coordinate2d *global_coordinate_vel, double robot_theta, Coordinate2d *out_robot_coordinate_vel) 
 {
     // Create a rotation matrix based on the robot's current orientation
-    Matrix2d rotation_matrix = Matrix::rotation_matrix_2d(-robot_theta); // Negative for inverse rotation
+    Eigen::Rotation2Dd rotation(- robot_theta);
 
     // Create a vector for the global coordinate
-    Vector2d global_vector(global_coordinate_vec->position.x(), global_coordinate_vec->position.y());
+    Vector2d global_vector = global_coordinate_vel->position;
 
     // Rotate the global vector to align with the robot's orientation
-    Vector2d rotated_vector = rotation_matrix * global_vector;
+    Vector2d rotated_vector = rotation * global_vector;
 
     // The robot's local coordinate is the rotated vector plus the robot's origin (which is now at (0, 0))
     Coordinate2d local_coordinate;
     local_coordinate.position = rotated_vector;
-    local_coordinate.theta = robot_theta;
+    local_coordinate.angle = global_coordinate_vel->angle;
 
-    if(robot_position_vec != nullptr)
+    if(out_robot_coordinate_vel != nullptr)
     {
-        robot_position_vec->position = local_coordinate.position;
-        robot_position_vec->theta = local_coordinate.theta;
+        *out_robot_coordinate_vel = local_coordinate;
     }
 
     return local_coordinate;
