@@ -4,6 +4,23 @@
 #include "lyra_lib/visibility_control.h"
 #include <cmath>
 #include <cstdint>
+#include <iostream>
+#include <eigen3/Eigen/Dense>
+
+using Eigen::Matrix2d;
+using Eigen::Vector2d;
+using Eigen::Vector3d;
+
+namespace Matrix
+{
+    inline Matrix2d rotation_matrix_2d(double theta)
+    {
+        Matrix2d rotation_matrix;
+        rotation_matrix << std::cos(theta), -std::sin(theta),
+                           std::sin(theta),  std::cos(theta);
+        return rotation_matrix;
+    }
+}
 
 namespace Units
 {
@@ -26,6 +43,7 @@ namespace Conversion
 {
 LYRA_LIB_PUBLIC double convertToRadian(double degree);
 LYRA_LIB_PUBLIC double convertToDegree(double radian);
+LYRA_LIB_PUBLIC Vector3d convertToRobotCoordinate(Vector3d *global_coordinate_vec, double now_robot_theta, Vector3d *robot_position_vec = nullptr);
 }
 // ------------------------------------------ //
 

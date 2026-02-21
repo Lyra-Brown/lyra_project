@@ -13,6 +13,30 @@ double convertToDegree(double radian)
 {
     return radian * 180.0 / M_PI;
 }
+
+Vector3d convertToRobotCoordinate(Vector3d *global_coordinate_vec, double now_robot_theta, Vector3d *robot_position_vec) 
+{
+    // Create a rotation matrix based on the robot's current orientation
+    Matrix2d rotation_matrix = Matrix::rotation_matrix_2d(-now_robot_theta); // Negative for inverse rotation
+
+    // Create a vector for the global coordinate
+    Vector2d global_vector(global_coordinate_vec->x(), global_coordinate_vec->y());
+
+    // Rotate the global vector to align with the robot's orientation
+    Vector2d rotated_vector = rotation_matrix * global_vector;
+
+    // The robot's local coordinate is the rotated vector plus the robot's origin (which is now at (0, 0))
+    Vector3d local_coordinate(rotated_vector.x(), rotated_vector.y(), now_robot_theta);
+
+    if(robot_position_vec != nullptr)
+    {
+        robot_position_vec->x() = local_coordinate.x();
+        robot_position_vec->y() = local_coordinate.y();
+        robot_position_vec->z() = local_coordinate.z();
+    }
+
+    return local_coordinate;
+}
 } // namespace Conversion
 // ------------------------------------------ //
 
