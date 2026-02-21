@@ -11,6 +11,12 @@ using Eigen::Matrix2d;
 using Eigen::Vector2d;
 using Eigen::Vector3d;
 
+typedef struct
+{
+    Vector2d position;
+    double theta; // Orientation in radians
+} Coordinate2d;
+
 namespace Matrix
 {
     inline Matrix2d rotation_matrix_2d(double theta)
@@ -43,7 +49,7 @@ namespace Conversion
 {
 LYRA_LIB_PUBLIC double convertToRadian(double degree);
 LYRA_LIB_PUBLIC double convertToDegree(double radian);
-LYRA_LIB_PUBLIC Vector3d convertToRobotCoordinate(Vector3d *global_coordinate_vec, double now_robot_theta, Vector3d *robot_position_vec = nullptr);
+LYRA_LIB_PUBLIC Coordinate2d convertToRobotCoordinate2d(Coordinate2d *global_coordinate_vec, double robot_theta, Coordinate2d *robot_position_vec = nullptr);
 }
 // ------------------------------------------ //
 
