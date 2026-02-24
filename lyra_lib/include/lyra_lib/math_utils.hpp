@@ -5,7 +5,7 @@
 #include <cmath>
 #include <cstdint>
 #include <iostream>
-#include <eigen3/Eigen/Dense>
+#include <Eigen/Dense>
 
 using Eigen::Matrix2d;
 using Eigen::Vector2d;
