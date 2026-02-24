@@ -12,10 +12,20 @@ add_library(lyra_general_lib STATIC
   src/CAN_tool.cpp
 )
 
+find_package(Eigen3 QUIET NO_MODULE)
+
 target_include_directories(lyra_general_lib PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
 )
+
+if(TARGET Eigen3::Eigen)
+  target_link_libraries(lyra_general_lib PUBLIC Eigen3::Eigen)
+elseif(EXISTS "/usr/include/eigen3/Eigen/Dense")
+  target_include_directories(lyra_general_lib PUBLIC /usr/include/eigen3)
+else()
+  message(WARNING "lyra_lib: Eigen3 was not found. Install libeigen3-dev or provide Eigen3::Eigen.")
+endif()
 
 find_package(ament_cmake QUIET)
 
