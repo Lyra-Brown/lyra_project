@@ -6,6 +6,7 @@
 #include <array>
 #include <cstdint>
 #include "lyra_lib/math_utils.hpp"
+#include "lyra_lib/config.hpp"
 
 
 class LYRA_LIB_PUBLIC OmniDriveKinematics 
