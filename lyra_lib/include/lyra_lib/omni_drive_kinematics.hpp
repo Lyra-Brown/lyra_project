@@ -30,7 +30,7 @@ class LYRA_LIB_PUBLIC OmniDriveKinematics
         Coordinate2d* robot_pose;
 
         Eigen::Matrix<double, WHEEL_COUNT, 3> J;
-        Eigen::Matrix<double, 3, WHEEL_COUNT> J_local;
+        Eigen::Matrix<double, WHEEL_COUNT, 3> J_local;
         Eigen::Matrix<double, 3, WHEEL_COUNT> J_local_inv;
         Eigen::Matrix<double, WHEEL_COUNT, 1> wheel_omega;
         Coordinate2d calic_robot_world_vel;

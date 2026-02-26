@@ -25,7 +25,7 @@ OmniDriveKinematics::OmniDriveKinematics(float* wheel_radius, float* from_center
 
 void OmniDriveKinematics::get_robot_vel()
 {
-    if(robot_pose == nullptr) return;
+    if(enc_wheel_omega == nullptr || wheel_radius == nullptr) return;
     
     double vx_robot = 0, vy_robot = 0, vtheta = 0;
     for(size_t j = 0; j < WHEEL_COUNT; j++) {
@@ -50,6 +50,10 @@ void OmniDriveKinematics::get_robot_pose()
 
 float OmniDriveKinematics::get_wheel_omega(uint8_t wheel_identifier)
 {
+    if(wheel_radius == nullptr || wheel_identifier >= WHEEL_COUNT 
+       || wheel_radius[wheel_identifier] <= 0.0f) 
+       return 0.0f;
+
     output_wheel_omega_ = (1.0f / wheel_radius[wheel_identifier]) * 
     ( 
         - std::sin(robot_yaw + wheel_angles[wheel_identifier]) * (world_x_vel) + 
