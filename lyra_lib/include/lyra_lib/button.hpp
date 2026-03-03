@@ -3,10 +3,10 @@
 
 #include <functional>
 
-class botton
+class button
 {
 public:
-    botton(std::function<void(void)> func) : func(func) {}
+    button(std::function<void(void)> func) : func(func) {}
 
     void once(bool flag)
     {
