@@ -9,10 +9,9 @@ OmniDriveKinematics::OmniDriveKinematics(float* wheel_radius, float* from_center
                                          float& world_x_vel, float& world_y_vel, float& robot_rot_vel,
                                          float* enc_wheel_omega, Coordinate2d* robot_pose
                                         )
-    : wheel_radius(wheel_radius), from_center_distance(from_center_distance), 
-      robot_yaw(robot_yaw), wheel_angles(wheel_angles),
-      world_x_vel(world_x_vel), world_y_vel(world_y_vel), robot_rot_vel(robot_rot_vel), 
-      enc_wheel_omega(enc_wheel_omega), robot_pose(robot_pose)
+    : wheel_radius(wheel_radius), wheel_angles(wheel_angles), from_center_distance(from_center_distance), 
+      enc_wheel_omega(enc_wheel_omega), robot_pose(robot_pose), robot_yaw(robot_yaw), world_x_vel(world_x_vel), 
+      world_y_vel(world_y_vel), robot_rot_vel(robot_rot_vel)
 {
     // Initialize the Jacobian matrix J
     for (size_t i = 0; i < WHEEL_COUNT; i++) {

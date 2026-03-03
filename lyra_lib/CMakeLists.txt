@@ -21,8 +21,10 @@ target_include_directories(lyra_general_lib PUBLIC
 
 if(TARGET Eigen3::Eigen)
   target_link_libraries(lyra_general_lib PUBLIC Eigen3::Eigen)
+  target_compile_options(lyra_general_lib PUBLIC -Wno-psabi)
 elseif(EXISTS "/usr/include/eigen3/Eigen/Dense")
-  target_include_directories(lyra_general_lib PUBLIC /usr/include/eigen3)
+  target_include_directories(lyra_general_lib SYSTEM PUBLIC /usr/include/eigen3)
+  target_compile_options(lyra_general_lib PUBLIC -Wno-psabi)
 else()
   message(WARNING "lyra_lib: Eigen3 was not found. Install libeigen3-dev or provide Eigen3::Eigen.")
 endif()
