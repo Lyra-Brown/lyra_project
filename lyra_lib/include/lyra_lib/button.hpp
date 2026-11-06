@@ -1,50 +1,52 @@
 #ifndef BUTTON_HPP
 #define BUTTON_HPP
 
-#include <functional>
+#include <cstdint>
 
-class button
+namespace lura::input
 {
-public:
-    button(std::function<void(void)> func) : func(func) {}
 
-    void once(bool flag)
-    {
-        if (!past && flag)
-        {
-            func();
-        }
-        past = flag; // 状態更新
-    }
-
-private:
-    std::function<void(void)> func;
-    bool past = false; // 前回の押下状態
+enum class ButtonState : uint8_t
+{
+    DEFAULT,
+    UP_EDGE,
+    DOWN_EDGE,
+    EDGE,
+    BUTTON_STATE_COUNT
 };
 
-class mode_swap
+class Button
 {
 public:
-    mode_swap(std::function<void(void)> func0, std::function<void(void)> func1, bool& mode)
-     : func{func0, func1}, mode(mode) {};
-
-    void go()
+    Button();
+    void update(bool pressed_)
     {
-        if(mode == 0)
+        wasPressed = pressed;
+        pressed = pressed_;
+    };
+    bool isPressed(ButtonState state) const
+    {
+        switch (state)
         {
-            func[0]();
-
-        }else
-        {
-            func[1]();
+        case ButtonState::DEFAULT:
+            return pressed;
+        case ButtonState::UP_EDGE:
+            return !pressed && wasPressed;
+        case ButtonState::DOWN_EDGE:
+            return pressed && !wasPressed;
+        case ButtonState::EDGE:
+            return pressed != wasPressed;
+        default:
+            return false;
         }
-    }
-
+    };
 
 private:
-    std::function<void(void)> func[2];
-    bool& mode;
+    uint8_t state;
+    bool pressed = false;
+    bool wasPressed = false;
 };
 
-inline void nothing(){};
+} // namespace lura::input
+
 #endif
