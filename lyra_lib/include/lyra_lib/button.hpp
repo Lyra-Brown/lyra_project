@@ -2,11 +2,12 @@
 #define BUTTON_HPP
 
 #include <cstdint>
+#include "lyra_lib/visibility_control.h"
 
 namespace lura::input
 {
 
-enum class ButtonState : uint8_t
+enum class LYRA_LIB_PUBLIC_TYPE ButtonState : uint8_t
 {
     DEFAULT,
     UP_EDGE,
@@ -15,7 +16,7 @@ enum class ButtonState : uint8_t
     BUTTON_STATE_COUNT
 };
 
-class Button
+class LYRA_LIB_PUBLIC Button
 {
 public:
     Button();
