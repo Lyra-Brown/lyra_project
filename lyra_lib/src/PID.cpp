@@ -1,45 +1,59 @@
 #include "lyra_lib/PID.hpp"
 
+#include <cstdint>
+#include <algorithm>
 
-PID::PID(double Kp, double Ki, double Kd) : Kp(Kp), Ki(Ki), Kd(Kd) {}
-
-void PID::Input(double target, double value) 
+template <typename T>
+T IPIDController<T>::update(T value, T target)
 {
-    e[2] = e[1];
-    e[1] = e[0];
-    e[0] = target - value;
-
-    u += Kp * (e[0] - e[1]) + Ki * e[0] + Kd * (e[0] - 2 * e[1] + e[2]);
-    if (limits_enabled) 
-    {
-        if (u > max_limit) 
-        {
-            u = max_limit;
-        } 
-        else if (u < min_limit) 
-        {
-            u = min_limit;
-        }
-    }
-
+    Input(value, target);
+    return Output();
 }
 
-double PID::Output() 
+template <typename T>
+void Pos_PIDController<T>::refresh()
 {
-    return u;
+    this->error[0] = 0;
+    this->error[1] = 0;
+    this->error[2] = 0;
+    this->output = 0;
+    ie = 0;
 }
 
-void PID::refresh() 
+template <typename T>
+void Pos_PIDController<T>::Input(T value, T target)
 {
-    e[0] = 0;
-    e[1] = 0;
-    e[2] = 0;
-    u = 0;
+    this->error[0] = target - value;
+    T de = (this->error[0] - this->error[1]) / this->config.dt;
+    ie += (this->error[0] + this->error[1]) * this->config.dt / static_cast<T>(2);
+    if(ie_limits.enabled) ie = std::clamp(ie, ie_limits.min, ie_limits.max);
+    this->output = this->config.gains.kp * this->error[0] + this->config.gains.ki * ie + this->config.gains.kd * de;
+    if(this->config.limits.enabled) this->output = std::clamp(this->output, this->config.limits.min, this->config.limits.max);
+    this->error[1] = this->error[0];
 }
 
-void PID::set_limits(float min, float max) 
+template <typename T>
+void Vel_PIDController<T>::refresh()
 {
-    min_limit = min;
-    max_limit = max;
-    limits_enabled = true;
+    this->error[0] = 0;
+    this->error[1] = 0;
+    this->error[2] = 0;
+    this->output = 0;
 }
+
+template <typename T>
+void Vel_PIDController<T>::Input(T value, T target)
+{
+    this->error[2] = this->error[1];
+    this->error[1] = this->error[0];
+    this->error[0] = target - value;
+    this->output += this->config.gains.kp * (this->error[0] - this->error[1]) + this->config.gains.ki * this->error[0] + this->config.gains.kd * (this->error[0] - 2 * this->error[1] + this->error[2]) / this->config.dt;
+    if(this->config.limits.enabled) this->output = std::clamp(this->output, this->config.limits.min, this->config.limits.max);
+}
+
+template class IPIDController<float>;
+template class IPIDController<double>;
+template class Pos_PIDController<float>;
+template class Pos_PIDController<double>;
+template class Vel_PIDController<float>;
+template class Vel_PIDController<double>;

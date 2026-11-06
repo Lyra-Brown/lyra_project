@@ -2,28 +2,75 @@
 #define PID_HPP
 
 #include "lyra_lib/visibility_control.h"
+#include <cstdint>
 
-
-class PID 
+template <typename T = float>
+struct PIDGains
 {
-    public:
-        PID(double Kp, double Ki, double Kd);
-    
-        void Input(double target, double value);
-        double Output();
-        void refresh();
-        void set_limits(float min, float max);
-    
-    private:
-        double Kp;
-        double Ki;
-        double Kd;
-        
-        double e[3] = {0}; 
-        double u = 0;
-        bool limits_enabled = false;
-        float min_limit = 0;
-        float max_limit = 0;
+    T kp;
+    T ki;
+    T kd;
 };
 
+template <typename T = float>
+struct PIDLimits
+{
+    T min;
+    T max;
+    bool enabled = false;
+};
+
+template <typename T = float>
+struct PIDConfig
+{
+    PIDGains<T> gains;
+    PIDLimits<T> limits;
+    T dt;
+};
+
+template <typename T = float>
+class IPIDController
+{
+public:
+    virtual ~IPIDController() = default;
+    IPIDController() = default;
+    IPIDController(T kp_, T ki_, T kd_, T dt_) { config.gains = {kp_, ki_, kd_}; config.dt = dt_; }
+    IPIDController(T kp_, T ki_, T kd_) { config.gains = {kp_, ki_, kd_}; }
+    void setGains(T kp_, T ki_, T kd_) { config.gains = {kp_, ki_, kd_}; }
+    void setDt(T dt_) { config.dt = dt_; }
+    void setLimits(T min_, T max_) { config.limits = {min_, max_, true}; }
+    void limitsEnabled(bool enabled) { config.limits.enabled = enabled; }
+    void toggleLimits() { config.limits.enabled = !config.limits.enabled; }
+    T update(T value, T target);
+    virtual void refresh() = 0;
+    virtual void Input(T value, T target) = 0;
+    T Output() const { return output; }
+
+protected:
+    PIDConfig<T> config;
+    T output = 0;
+    T error[3] = {0};
+};
+
+template <typename T = float>
+class LYRA_LIB_PUBLIC Pos_PIDController : public IPIDController<T>
+{
+public:
+    void refresh() override;
+    void Input(T value, T target) override;
+    void setIntegralLimits(T min_, T max_) { ie_limits = {min_, max_, true}; }
+    void IntegralLimitsEnabled(bool enabled) { ie_limits.enabled = enabled; }
+    void toggleIntegralLimits() { ie_limits.enabled = !ie_limits.enabled; }
+private:
+    T ie = 0;
+    PIDLimits<T> ie_limits;
+};
+
+template <typename T = float>
+class LYRA_LIB_PUBLIC Vel_PIDController : public IPIDController<T>
+{
+public:
+    void refresh() override;
+    void Input(T value, T target) override;
+};
 #endif // PID_HPP
