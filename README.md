@@ -2,7 +2,7 @@
 
 ARAMR プロジェクトで使用する C++ 共通ライブラリを管理するディレクトリです。
 
-現在は、PID 制御とボタン入力など、ロボット制御で共通して利用する処理を [`lyra_lib`](./lyra_lib/) にまとめています。
+現在は、PID 制御、逐次最小二乗法、ボタン入力など、ロボット制御で共通して利用する処理を [`lyra_lib`](./lyra_lib/) にまとめています。
 
 機能ごとの詳しい説明は [`Docs/`](./Docs/) を参照してください。
 
@@ -25,10 +25,18 @@ lyra_project/
 | ヘッダ | 内容 |
 | --- | --- |
 | [`PID.hpp`](./lyra_lib/include/lyra_lib/PID.hpp) | PID 制御 |
+| [`RLS.hpp`](./lyra_lib/include/lyra_lib/RLS.hpp) | float/double対応・動的サイズの逐次最小二乗法 |
 | [`button.hpp`](./lyra_lib/include/lyra_lib/button.hpp) | ボタン入力状態とエッジ検出 |
 | [`visibility_control.h`](./lyra_lib/include/lyra_lib/visibility_control.h) | シンボル公開範囲の制御 |
 
 ライブラリのターゲット名は `lyra_general_lib` です。C++ 標準は C++17 を使用します。
+
+機能別のドキュメント:
+
+- [PID 制御](./Docs/PID.md)
+- [RLS（逐次最小二乗法）](./Docs/RLS.md)
+- [ボタン入力](./Docs/button.md)
+- [シンボル公開制御](./Docs/visibility_control.md)
 
 ## 必要な環境
 
