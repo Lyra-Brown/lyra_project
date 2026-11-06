@@ -17,7 +17,13 @@
 
 ### ビルド
 
-ライブラリのターゲット名は `lyra_general_lib` です。C++ 標準は C++17 で、オムニドライブ運動学などでは Eigen3 を使用します。
+ライブラリのターゲット名は `lyra_general_lib` です。C++ 標準は C++17 で、オムニドライブ運動学などでは Eigen3 を使用します。CMake は、まず `Eigen3::Eigen`、次に `lyra_project/modules/eigen`、最後に `/usr/include/eigen3` を検索します。
+
+システムに Eigen3 がない場合は、Eigen のリポジトリを次の場所に clone してください。
+
+```text
+lyra_project/modules/eigen/
+```
 
 ```bash
 cmake -S lyra_lib -B build
