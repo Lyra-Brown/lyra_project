@@ -2,9 +2,9 @@
 
 ARAMR プロジェクトで使用する C++ 共通ライブラリを管理するディレクトリです。
 
-現在は、PID 制御、オムニホイールの運動学計算、数学ユーティリティ、CAN データ変換など、ロボット制御で共通して利用する処理を [`lyra_lib`](./lyra_lib/) にまとめています。
+現在は、PID 制御とボタン入力など、ロボット制御で共通して利用する処理を [`lyra_lib`](./lyra_lib/) にまとめています。
 
-各ファイルの詳しい説明は [`Docs/README.md`](./Docs/README.md) を参照してください。
+機能ごとの詳しい説明は [`Docs/`](./Docs/) を参照してください。
 
 ## ディレクトリ構成
 
@@ -25,12 +25,8 @@ lyra_project/
 | ヘッダ | 内容 |
 | --- | --- |
 | [`PID.hpp`](./lyra_lib/include/lyra_lib/PID.hpp) | PID 制御 |
-| [`omni_drive_kinematics.hpp`](./lyra_lib/include/lyra_lib/omni_drive_kinematics.hpp) | オムニドライブの速度・姿勢計算 |
-| [`math_utils.hpp`](./lyra_lib/include/lyra_lib/math_utils.hpp) | 座標変換、角度変換、角度の正規化、数学ユーティリティ |
-| [`CAN_tool.hpp`](./lyra_lib/include/lyra_lib/CAN_tool.hpp) | CAN 通信用データの型変換 |
 | [`button.hpp`](./lyra_lib/include/lyra_lib/button.hpp) | ボタン入力状態とエッジ検出 |
-| [`utils.hpp`](./lyra_lib/include/lyra_lib/utils.hpp) | デバッグ出力などの共通処理 |
-| [`config.hpp`](./lyra_lib/include/lyra_lib/config.hpp) | ライブラリの設定値 |
+| [`visibility_control.h`](./lyra_lib/include/lyra_lib/visibility_control.h) | シンボル公開範囲の制御 |
 
 ライブラリのターゲット名は `lyra_general_lib` です。C++ 標準は C++17 を使用します。
 
@@ -41,7 +37,8 @@ lyra_project/
 - Eigen3
 - ROS 2 で使用する場合は `ament_cmake`
 
-Eigen3 は、まず CMake の `Eigen3::Eigen` ターゲットを検索します。見つからない場合は `/usr/include/eigen3` も確認します。
+Eigen3 は、まず CMake の `Eigen3::Eigen` ターゲットを検索します。見つからない場合は、
+リポジトリ内の `modules/eigen`、さらに `/usr/include/eigen3` を確認します。
 
 ## ROS 2 パッケージとしてビルドする
 
@@ -71,9 +68,13 @@ cmake --build build
 ```cpp
 #include "lyra_lib/PID.hpp"
 
-PID controller(1.0, 0.0, 0.1);
-controller.Input(target, value);
-const double output = controller.Output();
+Pos_PIDController<float> controller;
+controller.setGains(1.0f, 0.0f, 0.1f);
+controller.setDt(0.01f);
+const float value = 0.0f;
+const float target = 1.0f;
+controller.Input(value, target);
+const float output = controller.Output();
 ```
 
 `lyra_lib` の公開ヘッダを利用する場合は、ビルドシステムで `lyra_general_lib` をリンクし、`include` ディレクトリをインクルードパスに追加してください。
