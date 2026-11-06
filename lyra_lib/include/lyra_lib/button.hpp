@@ -24,7 +24,7 @@ public:
         wasPressed = pressed;
         pressed = pressed_;
     };
-    bool isPressed(ButtonState state) const
+    bool isPressed(ButtonState state = ButtonState::DEFAULT) const
     {
         switch (state)
         {
