@@ -19,14 +19,15 @@ target_include_directories(lyra_general_lib PUBLIC
   $<INSTALL_INTERFACE:include>
 )
 
-if(TARGET Eigen3::Eigen)
-  target_link_libraries(lyra_general_lib PUBLIC Eigen3::Eigen)
-  target_compile_options(lyra_general_lib PUBLIC -Wno-psabi)
-elseif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../modules/eigen/Eigen/Dense")
+
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../modules/eigen/Eigen/Dense")
   target_include_directories(lyra_general_lib SYSTEM PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../modules/eigen>
     $<INSTALL_INTERFACE:include>
   )
+  target_compile_options(lyra_general_lib PUBLIC -Wno-psabi)
+elseif(TARGET Eigen3::Eigen)
+  target_link_libraries(lyra_general_lib PUBLIC Eigen3::Eigen)
   target_compile_options(lyra_general_lib PUBLIC -Wno-psabi)
 elseif(EXISTS "/usr/include/eigen3/Eigen/Dense")
   target_include_directories(lyra_general_lib SYSTEM PUBLIC /usr/include/eigen3)
