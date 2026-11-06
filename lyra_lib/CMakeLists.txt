@@ -6,10 +6,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_library(lyra_general_lib STATIC
   src/PID.cpp
-  src/omni_drive_kinematics.cpp
-  src/math_utils.cpp
-  src/utils.cpp
-  src/CAN_tool.cpp
 )
 
 find_package(Eigen3 QUIET NO_MODULE)
