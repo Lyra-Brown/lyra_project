@@ -4,7 +4,7 @@
 #include "lyra_lib/visibility_control.h"
 #include <cstdint>
 
-template <typename T = float>
+template <typename T>
 struct PIDGains
 {
     T kp;
@@ -12,7 +12,7 @@ struct PIDGains
     T kd;
 };
 
-template <typename T = float>
+template <typename T>
 struct PIDLimits
 {
     T min;
@@ -20,7 +20,7 @@ struct PIDLimits
     bool enabled = false;
 };
 
-template <typename T = float>
+template <typename T>
 struct PIDConfig
 {
     PIDGains<T> gains;
@@ -28,11 +28,11 @@ struct PIDConfig
     T dt;
 };
 
-template <typename T = float>
+template <typename T>
 class IPIDController
 {
 public:
-    virtual ~IPIDController() = default;
+    ~IPIDController() = default;
     IPIDController() = default;
     IPIDController(T kp_, T ki_, T kd_, T dt_) { config.gains = {kp_, ki_, kd_}; config.dt = dt_; }
     IPIDController(T kp_, T ki_, T kd_) { config.gains = {kp_, ki_, kd_}; }
@@ -52,7 +52,7 @@ protected:
     T error[3] = {0};
 };
 
-template <typename T = float>
+template <typename T = double>
 class LYRA_LIB_PUBLIC Pos_PIDController : public IPIDController<T>
 {
 public:
@@ -66,7 +66,7 @@ private:
     PIDLimits<T> ie_limits;
 };
 
-template <typename T = float>
+template <typename T = double>
 class LYRA_LIB_PUBLIC Vel_PIDController : public IPIDController<T>
 {
 public:
