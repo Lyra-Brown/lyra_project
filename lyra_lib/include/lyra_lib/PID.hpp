@@ -41,7 +41,7 @@ public:
 protected:
     virtual void input(T value, T target) = 0;
     pid_config<T> config;
-    Limiter<T> limiter;
+    limiter<T> output_limiter;
     T output = 0;
     T error[3] = {0};
 };
@@ -57,7 +57,7 @@ public:
     void toggle_integral_limits();
 private:
     T ie = 0;
-    Limiter<T> integral_limiter;
+    limiter<T> integral_limiter;
 };
 
 template <typename T = double>

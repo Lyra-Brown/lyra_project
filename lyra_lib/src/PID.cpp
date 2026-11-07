@@ -36,19 +36,19 @@ void pid_controller_base<T>::set_dt(T dt_)
 template <typename T>
 void pid_controller_base<T>::set_limits(T min_, T max_)
 {
-    limiter.setLimits(min_, max_);
+    output_limiter.set_limits(min_, max_);
 }
 
 template <typename T>
 void pid_controller_base<T>::limits_enabled(bool enabled)
 {
-    limiter.enableLimits(enabled);
+    output_limiter.enable_limits(enabled);
 }
 
 template <typename T>
 void pid_controller_base<T>::toggle_limits()
 {
-    limiter.toggleLimits();
+    output_limiter.toggle_limits();
 }
 
 template <typename T>
@@ -74,28 +74,28 @@ void pos_pid_controller<T>::input(T value, T target)
     this->error[0] = target - value;
     T de = (this->error[0] - this->error[1]) / this->config.dt;
     ie += (this->error[0] + this->error[1]) * this->config.dt / static_cast<T>(2);
-    ie = integral_limiter.setValue(ie);
+    ie = integral_limiter.set_value(ie);
     this->output = this->config.gains.kp * this->error[0] + this->config.gains.ki * ie + this->config.gains.kd * de;
-    this->output = this->limiter.setValue(this->output);
+    this->output = this->output_limiter.set_value(this->output);
     this->error[1] = this->error[0];
 }
 
 template <typename T>
 void pos_pid_controller<T>::set_integral_limits(T min_, T max_)
 {
-    integral_limiter.setLimits(min_, max_);
+    integral_limiter.set_limits(min_, max_);
 }
 
 template <typename T>
 void pos_pid_controller<T>::integral_limits_enabled(bool enabled)
 {
-    integral_limiter.enableLimits(enabled);
+    integral_limiter.enable_limits(enabled);
 }
 
 template <typename T>
 void pos_pid_controller<T>::toggle_integral_limits()
 {
-    integral_limiter.toggleLimits();
+    integral_limiter.toggle_limits();
 }
 
 template <typename T>
@@ -114,7 +114,7 @@ void vel_pid_controller<T>::input(T value, T target)
     this->error[1] = this->error[0];
     this->error[0] = target - value;
     this->output += this->config.gains.kp * (this->error[0] - this->error[1]) + this->config.gains.ki * this->error[0] + this->config.gains.kd * (this->error[0] - 2 * this->error[1] + this->error[2]) / this->config.dt;
-    this->output = this->limiter.setValue(this->output);
+    this->output = this->output_limiter.set_value(this->output);
 }
 
 template class pid_controller_base<float>;
