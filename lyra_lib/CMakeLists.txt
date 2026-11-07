@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_library(lyra_general_lib STATIC
   src/PID.cpp
   src/RLS.cpp
+  src/filter.cpp
+  src/accelate.cpp
 )
 
 find_package(Eigen3 QUIET NO_MODULE)
