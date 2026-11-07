@@ -76,13 +76,12 @@ cmake --build build
 ```cpp
 #include "lyra_lib/PID.hpp"
 
-Pos_PIDController<float> controller;
-controller.setGains(1.0f, 0.0f, 0.1f);
-controller.setDt(0.01f);
+pos_pid_controller<float> controller;
+controller.set_gains(1.0f, 0.0f, 0.1f);
+controller.set_dt(0.01f);
 const float value = 0.0f;
 const float target = 1.0f;
-controller.Input(value, target);
-const float output = controller.Output();
+const float output = controller.update(value, target);
 ```
 
 `lyra_lib` の公開ヘッダを利用する場合は、ビルドシステムで `lyra_general_lib` をリンクし、`include` ディレクトリをインクルードパスに追加してください。

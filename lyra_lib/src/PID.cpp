@@ -5,26 +5,26 @@
 #include <stdexcept>
 
 template <typename T>
-PIDControllerBase<T>::PIDControllerBase(T kp_, T ki_, T kd_, T dt_)
+pid_controller_base<T>::pid_controller_base(T kp_, T ki_, T kd_, T dt_)
 {
     config.gains = {kp_, ki_, kd_};
-    setDt(dt_);
+    set_dt(dt_);
 }
 
 template <typename T>
-PIDControllerBase<T>::PIDControllerBase(T kp_, T ki_, T kd_)
-{
-    config.gains = {kp_, ki_, kd_};
-}
-
-template <typename T>
-void PIDControllerBase<T>::setGains(T kp_, T ki_, T kd_)
+pid_controller_base<T>::pid_controller_base(T kp_, T ki_, T kd_)
 {
     config.gains = {kp_, ki_, kd_};
 }
 
 template <typename T>
-void PIDControllerBase<T>::setDt(T dt_)
+void pid_controller_base<T>::set_gains(T kp_, T ki_, T kd_)
+{
+    config.gains = {kp_, ki_, kd_};
+}
+
+template <typename T>
+void pid_controller_base<T>::set_dt(T dt_)
 {
     if(dt_ <= 0)
     {
@@ -34,32 +34,32 @@ void PIDControllerBase<T>::setDt(T dt_)
 }
 
 template <typename T>
-void PIDControllerBase<T>::setLimits(T min_, T max_)
+void pid_controller_base<T>::set_limits(T min_, T max_)
 {
     limiter.setLimits(min_, max_);
 }
 
 template <typename T>
-void PIDControllerBase<T>::limitsEnabled(bool enabled)
+void pid_controller_base<T>::limits_enabled(bool enabled)
 {
     limiter.enableLimits(enabled);
 }
 
 template <typename T>
-void PIDControllerBase<T>::toggleLimits()
+void pid_controller_base<T>::toggle_limits()
 {
     limiter.toggleLimits();
 }
 
 template <typename T>
-T PIDControllerBase<T>::update(T value, T target)
+T pid_controller_base<T>::update(T value, T target)
 {
-    Input(value, target);
-    return Output();
+    input(value, target);
+    return output_value();
 }
 
 template <typename T>
-void Pos_PIDController<T>::refresh()
+void pos_pid_controller<T>::refresh()
 {
     this->error[0] = 0;
     this->error[1] = 0;
@@ -69,37 +69,37 @@ void Pos_PIDController<T>::refresh()
 }
 
 template <typename T>
-void Pos_PIDController<T>::Input(T value, T target)
+void pos_pid_controller<T>::input(T value, T target)
 {
     this->error[0] = target - value;
     T de = (this->error[0] - this->error[1]) / this->config.dt;
     ie += (this->error[0] + this->error[1]) * this->config.dt / static_cast<T>(2);
-    ie = integralLimiter.setValue(ie);
+    ie = integral_limiter.setValue(ie);
     this->output = this->config.gains.kp * this->error[0] + this->config.gains.ki * ie + this->config.gains.kd * de;
     this->output = this->limiter.setValue(this->output);
     this->error[1] = this->error[0];
 }
 
 template <typename T>
-void Pos_PIDController<T>::setIntegralLimits(T min_, T max_)
+void pos_pid_controller<T>::set_integral_limits(T min_, T max_)
 {
-    integralLimiter.setLimits(min_, max_);
+    integral_limiter.setLimits(min_, max_);
 }
 
 template <typename T>
-void Pos_PIDController<T>::IntegralLimitsEnabled(bool enabled)
+void pos_pid_controller<T>::integral_limits_enabled(bool enabled)
 {
-    integralLimiter.enableLimits(enabled);
+    integral_limiter.enableLimits(enabled);
 }
 
 template <typename T>
-void Pos_PIDController<T>::toggleIntegralLimits()
+void pos_pid_controller<T>::toggle_integral_limits()
 {
-    integralLimiter.toggleLimits();
+    integral_limiter.toggleLimits();
 }
 
 template <typename T>
-void Vel_PIDController<T>::refresh()
+void vel_pid_controller<T>::refresh()
 {
     this->error[0] = 0;
     this->error[1] = 0;
@@ -108,7 +108,7 @@ void Vel_PIDController<T>::refresh()
 }
 
 template <typename T>
-void Vel_PIDController<T>::Input(T value, T target)
+void vel_pid_controller<T>::input(T value, T target)
 {
     this->error[2] = this->error[1];
     this->error[1] = this->error[0];
@@ -117,9 +117,9 @@ void Vel_PIDController<T>::Input(T value, T target)
     this->output = this->limiter.setValue(this->output);
 }
 
-template class PIDControllerBase<float>;
-template class PIDControllerBase<double>;
-template class Pos_PIDController<float>;
-template class Pos_PIDController<double>;
-template class Vel_PIDController<float>;
-template class Vel_PIDController<double>;
+template class pid_controller_base<float>;
+template class pid_controller_base<double>;
+template class pos_pid_controller<float>;
+template class pos_pid_controller<double>;
+template class vel_pid_controller<float>;
+template class vel_pid_controller<double>;
