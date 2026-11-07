@@ -1,4 +1,4 @@
-#include "lyra_lib/RLS.hpp"
+#include "lyra_lib/rls.hpp"
 
 #include <algorithm>
 #include <cmath>
@@ -7,25 +7,25 @@
 namespace
 {
 template <typename T>
-typename RLS_Vel<T>::Vector make_initial_params(
+typename rls_vel<T>::vector make_initial_params(
     const T* initial_params,
     Eigen::Index parameter_count)
 {
     if (initial_params == nullptr || parameter_count <= 0)
     {
         throw std::invalid_argument(
-            "RLS_Vel: initial_params must be non-null and parameter_count must be positive");
+            "rls_vel: initial_params must be non-null and parameter_count must be positive");
     }
 
-    return Eigen::Map<const typename RLS_Vel<T>::Vector>(
+    return Eigen::Map<const typename rls_vel<T>::vector>(
         initial_params,
         parameter_count);
 }
 } // namespace
 
 template <typename T>
-RLS_Vel<T>::RLS_Vel(
-    const Vector& initial_params,
+rls_vel<T>::rls_vel(
+    const vector& initial_params,
     T forgetting_factor,
     T initial_covariance)
     : parameters(initial_params),
@@ -43,17 +43,17 @@ RLS_Vel<T>::RLS_Vel(
     if (parameters.size() == 0)
     {
         throw std::invalid_argument(
-            "RLS_Vel: initial_params must not be empty");
+            "rls_vel: initial_params must not be empty");
     }
 }
 
 template <typename T>
-RLS_Vel<T>::RLS_Vel(
+rls_vel<T>::rls_vel(
     const T* initial_params,
     Eigen::Index parameter_count,
     T forgetting_factor,
     T initial_covariance)
-    : RLS_Vel<T>(
+    : rls_vel<T>(
           make_initial_params<T>(initial_params, parameter_count),
           forgetting_factor,
           initial_covariance)
@@ -61,26 +61,26 @@ RLS_Vel<T>::RLS_Vel(
 }
 
 template <typename T>
-void RLS_Vel<T>::set_clipping_threshold(T threshold)
+void rls_vel<T>::set_clipping_threshold(T threshold)
 {
     clipping_threshold = std::abs(threshold);
 }
 
 template <typename T>
-void RLS_Vel<T>::set_covariance_reset_flag(bool flag)
+void rls_vel<T>::set_covariance_reset_flag(bool flag)
 {
     covariance_reset_flag = flag;
 }
 
 template <typename T>
-void RLS_Vel<T>::update(
+void rls_vel<T>::update(
     T actual_value,
-    const Vector& true_value_labels)
+    const vector& true_value_labels)
 {
     if (true_value_labels.size() != parameters.size())
     {
         throw std::invalid_argument(
-            "RLS_Vel: true_value_labels size must match the parameter count");
+            "rls_vel: true_value_labels size must match the parameter count");
     }
 
     const T denominator =
@@ -92,7 +92,7 @@ void RLS_Vel<T>::update(
         return;
     }
 
-    const Vector gain =
+    const vector gain =
         covariance * true_value_labels / denominator;
     const T error =
         actual_value - true_value_labels.dot(parameters);
@@ -141,10 +141,10 @@ void RLS_Vel<T>::update(
 }
 
 template <typename T>
-typename RLS_Vel<T>::Vector RLS_Vel<T>::get_parameters() const
+typename rls_vel<T>::vector rls_vel<T>::get_parameters() const
 {
     return parameters;
 }
 
-template class RLS_Vel<float>;
-template class RLS_Vel<double>;
+template class rls_vel<float>;
+template class rls_vel<double>;

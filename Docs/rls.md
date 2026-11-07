@@ -2,12 +2,12 @@
 
 対象ファイル:
 
-- [`RLS.hpp`](../lyra_lib/include/lyra_lib/RLS.hpp)
-- [`RLS.cpp`](../lyra_lib/src/RLS.cpp)
+- [`rls.hpp`](../lyra_lib/include/lyra_lib/rls.hpp)
+- [`rls.cpp`](../lyra_lib/src/rls.cpp)
 
 ## 概要
 
-`RLS_Vel<T>` は、動的なパラメータ数に対応した逐次最小二乗法
+`rls_vel<T>` は、動的なパラメータ数に対応した逐次最小二乗法
 (Recursive Least Squares) のクラスです。
 
 `T` には `float` または `double` を指定できます。デフォルトは `double` で、
@@ -16,12 +16,12 @@
 ## 使い方
 
 ```cpp
-#include "lyra_lib/RLS.hpp"
+#include "lyra_lib/rls.hpp"
 
 Eigen::VectorXf initial_params(3);
 initial_params << 0.0f, 0.0f, 0.0f;
 
-RLS_Vel<float> rls(initial_params);
+rls_vel<float> rls(initial_params);
 
 Eigen::VectorXf labels(3);
 labels << 1.0f, 2.0f, 3.0f;
@@ -30,25 +30,25 @@ rls.update(1.0f, labels);
 const Eigen::VectorXf parameters = rls.get_parameters();
 ```
 
-`double` を使う場合は `Eigen::VectorXd` と `RLS_Vel<double>` を使用します。
+`double` を使う場合は `Eigen::VectorXd` と `rls_vel<double>` を使用します。
 
 ```cpp
 Eigen::VectorXd initial_params(3);
 initial_params << 0.0, 0.0, 0.0;
 
-RLS_Vel<double> rls(initial_params);
+rls_vel<double> rls(initial_params);
 ```
 
 初期パラメータの配列と要素数を指定するコンストラクタも使用できます。
 
 ```cpp
 const float initial_params[] = {0.0f, 0.0f, 0.0f};
-RLS_Vel<float> rls(initial_params, 3);
+rls_vel<float> rls(initial_params, 3);
 ```
 
 ## コンストラクタ
 
-### `RLS_Vel(const Vector& initial_params, T forgetting_factor, T initial_covariance)`
+### `rls_vel(const vector& initial_params, T forgetting_factor, T initial_covariance)`
 
 - `initial_params`: 推定するパラメータの初期値
 - `forgetting_factor`: 忘却係数。`1.0e-6` から `1.0` の範囲に制限されます
@@ -59,7 +59,7 @@ RLS_Vel<float> rls(initial_params, 3);
 
 ## メンバ関数
 
-### `update(T actual_value, const Vector& true_value_labels)`
+### `update(T actual_value, const vector& true_value_labels)`
 
 観測値 `actual_value` と説明変数ベクトル `true_value_labels` を使って、
 パラメータと共分散行列を更新します。
@@ -69,7 +69,7 @@ RLS_Vel<float> rls(initial_params, 3);
 
 ### `get_parameters()`
 
-現在の推定パラメータを返します。戻り値の型は `RLS_Vel<T>::Vector` です。
+現在の推定パラメータを返します。戻り値の型は `rls_vel<T>::vector` です。
 
 ### `set_clipping_threshold(T threshold)`
 
@@ -84,6 +84,6 @@ RLS_Vel<float> rls(initial_params, 3);
 ## 注意点
 
 - `float` と `double` を混在させず、初期パラメータと説明変数には同じ型を使用してください。
-- `actual_value` と `true_value_labels` は、`RLS_Vel<T>` の `T` と同じ型を使用してください。
+- `actual_value` と `true_value_labels` は、`rls_vel<T>` の `T` と同じ型を使用してください。
 - `initial_covariance` は正の値を指定してください。
 - 推定器はスレッドセーフではありません。

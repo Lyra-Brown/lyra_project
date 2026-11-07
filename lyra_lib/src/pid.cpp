@@ -1,4 +1,4 @@
-#include "lyra_lib/PID.hpp"
+#include "lyra_lib/pid.hpp"
 
 #include <cstdint>
 #include <algorithm>

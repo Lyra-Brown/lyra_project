@@ -24,8 +24,8 @@ lyra_project/
 
 | ヘッダ | 内容 |
 | --- | --- |
-| [`PID.hpp`](./lyra_lib/include/lyra_lib/PID.hpp) | PID 制御 |
-| [`RLS.hpp`](./lyra_lib/include/lyra_lib/RLS.hpp) | float/double対応・動的サイズの逐次最小二乗法 |
+| [`pid.hpp`](./lyra_lib/include/lyra_lib/pid.hpp) | PID 制御 |
+| [`rls.hpp`](./lyra_lib/include/lyra_lib/rls.hpp) | float/double対応・動的サイズの逐次最小二乗法 |
 | [`button.hpp`](./lyra_lib/include/lyra_lib/button.hpp) | ボタン入力状態とエッジ検出 |
 | [`visibility_control.h`](./lyra_lib/include/lyra_lib/visibility_control.h) | シンボル公開範囲の制御 |
 
@@ -33,8 +33,8 @@ lyra_project/
 
 機能別のドキュメント:
 
-- [PID 制御](./Docs/PID.md)
-- [RLS（逐次最小二乗法）](./Docs/RLS.md)
+- [PID 制御](./Docs/pid.md)
+- [RLS（逐次最小二乗法）](./Docs/rls.md)
 - [ボタン入力](./Docs/button.md)
 - [シンボル公開制御](./Docs/visibility_control.md)
 
@@ -74,7 +74,7 @@ cmake --build build
 ## 利用例
 
 ```cpp
-#include "lyra_lib/PID.hpp"
+#include "lyra_lib/pid.hpp"
 
 pos_pid_controller<float> controller;
 controller.set_gains(1.0f, 0.0f, 0.1f);

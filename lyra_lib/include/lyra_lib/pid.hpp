@@ -1,5 +1,5 @@
-#ifndef PID_HPP
-#define PID_HPP
+#ifndef LYRA_LIB_PID_HPP
+#define LYRA_LIB_PID_HPP
 
 #include "lyra_lib/visibility_control.h"
 #include "lyra_lib/limiter.hpp"
@@ -67,4 +67,4 @@ public:
     void refresh() override;
     void input(T value, T target) override;
 };
-#endif // PID_HPP
+#endif // LYRA_LIB_PID_HPP

@@ -6,37 +6,37 @@
 
 ## 概要
 
-`Button` は、ボタン入力の現在値と前回値を保持し、押下状態および状態変化（エッジ）を判定します。
+`button` は、ボタン入力の現在値と前回値を保持し、押下状態および状態変化（エッジ）を判定します。
 
 ## 使い方
 
 ```cpp
 #include "lyra_lib/button.hpp"
 
-lura::input::Button button;
+lura::input::button button;
 
 button.update(read_button());
-if (button.isPressed(lura::input::ButtonState::DOWN_EDGE)) {
+if (button.is_pressed(lura::input::button_state::down_edge)) {
     // 押された瞬間の処理
 }
 ```
 
-`update()` は周期的に 1 回ずつ呼び出してください。`isPressed()` は、通常は `update()` の直後に呼び出します。
+`update()` は周期的に 1 回ずつ呼び出してください。`is_pressed()` は、通常は `update()` の直後に呼び出します。
 
-## `ButtonState`
+## `button_state`
 
 | 状態 | 判定 |
 | --- | --- |
-| `DEFAULT` | 現在押されている |
-| `UP_EDGE` | 前回は押下、現在は未押下 |
-| `DOWN_EDGE` | 前回は未押下、現在は押下 |
-| `EDGE` | 押下状態が変化した |
-| `BUTTON_STATE_COUNT` | 状態数を表す番兵値。判定には使用しない |
+| `default_state` | 現在押されている |
+| `up_edge` | 前回は押下、現在は未押下 |
+| `down_edge` | 前回は未押下、現在は押下 |
+| `edge` | 押下状態が変化した |
+| `button_state_count` | 状態数を表す番兵値。判定には使用しない |
 
-`isPressed()` の引数を省略すると `DEFAULT` として扱われ、現在の押下状態を返します。
+`is_pressed()` の引数を省略すると `default_state` として扱われ、現在の押下状態を返します。
 
 ## 注意点
 
 - 最初の `update()` 前は、現在値・前回値とも未押下です。
-- `Button` は入力値を保持するだけで、GPIO やスイッチのチャタリング除去は行いません。
+- `button` は入力値を保持するだけで、GPIO やスイッチのチャタリング除去は行いません。
 - `update()` を呼ばない間は、エッジ判定の状態も更新されません。

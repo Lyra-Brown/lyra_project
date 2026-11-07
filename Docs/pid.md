@@ -2,20 +2,20 @@
 
 対象ファイル:
 
-- [`PID.hpp`](../lyra_lib/include/lyra_lib/PID.hpp)
-- [`PID.cpp`](../lyra_lib/src/PID.cpp)
+- [`pid.hpp`](../lyra_lib/include/lyra_lib/pid.hpp)
+- [`pid.cpp`](../lyra_lib/src/pid.cpp)
 
 ## 概要
 
 `pid_controller_base<T>` は、目標値と現在値の差から制御出力を計算する基底クラスです。
-実際に使用する場合は、位置形式の [`pos_pid_controller<T>`](../lyra_lib/include/lyra_lib/PID.hpp)
-または速度形式の [`vel_pid_controller<T>`](../lyra_lib/include/lyra_lib/PID.hpp) を使用します。
+実際に使用する場合は、位置形式の [`pos_pid_controller<T>`](../lyra_lib/include/lyra_lib/pid.hpp)
+または速度形式の [`vel_pid_controller<T>`](../lyra_lib/include/lyra_lib/pid.hpp) を使用します。
 入力は `update(value, target)` に渡し、更新後の出力を取得します。
 
 ## 使い方
 
 ```cpp
-#include "lyra_lib/PID.hpp"
+#include "lyra_lib/pid.hpp"
 
 pos_pid_controller<float> controller;
 controller.set_gains(1.0f, 0.1f, 0.01f);

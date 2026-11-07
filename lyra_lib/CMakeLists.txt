@@ -5,8 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_library(lyra_general_lib STATIC
-  src/PID.cpp
-  src/RLS.cpp
+  src/pid.cpp
+  src/rls.cpp
   src/filter.cpp
   src/accelate.cpp
 )

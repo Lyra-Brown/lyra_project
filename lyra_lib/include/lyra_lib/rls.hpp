@@ -1,22 +1,22 @@
-#ifndef RLS_HPP
-#define RLS_HPP
+#ifndef LYRA_LIB_RLS_HPP
+#define LYRA_LIB_RLS_HPP
 
 #include "lyra_lib/visibility_control.h"
 
 #include "Eigen/Dense"
 
 template <typename T = double>
-class LYRA_LIB_PUBLIC RLS_Vel
+class LYRA_LIB_PUBLIC rls_vel
 {
 public:
-    using Vector = Eigen::Matrix<T, Eigen::Dynamic, 1>;
+    using vector = Eigen::Matrix<T, Eigen::Dynamic, 1>;
 
-    RLS_Vel(
-        const Vector& initial_params,
+    rls_vel(
+        const vector& initial_params,
         T forgetting_factor = static_cast<T>(0.8),
         T initial_covariance = static_cast<T>(1000.0));
 
-    RLS_Vel(
+    rls_vel(
         const T* initial_params,
         Eigen::Index parameter_count,
         T forgetting_factor = static_cast<T>(0.8),
@@ -25,11 +25,11 @@ public:
     void set_clipping_threshold(T threshold);
     void set_covariance_reset_flag(bool flag);
 
-    void update(T actual_value, const Vector& true_value_labels);
-    Vector get_parameters() const;
+    void update(T actual_value, const vector& true_value_labels);
+    vector get_parameters() const;
 
 private:
-    Vector parameters;
+    vector parameters;
     Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> covariance;
     T forget_factor;
     T clipping_threshold = static_cast<T>(1e5);
@@ -37,4 +37,4 @@ private:
     bool covariance_reset_flag = true;
 };
 
-#endif
+#endif // LYRA_LIB_RLS_HPP

@@ -7,36 +7,36 @@
 namespace lura::input
 {
 
-enum class LYRA_LIB_PUBLIC_TYPE ButtonState : uint8_t
+enum class LYRA_LIB_PUBLIC_TYPE button_state : uint8_t
 {
-    DEFAULT,
-    UP_EDGE,
-    DOWN_EDGE,
-    EDGE,
-    BUTTON_STATE_COUNT
+    default_state,
+    up_edge,
+    down_edge,
+    edge,
+    button_state_count
 };
 
-class LYRA_LIB_PUBLIC Button
+class LYRA_LIB_PUBLIC button
 {
 public:
-    Button();
+    button();
     void update(bool pressed_)
     {
-        wasPressed = pressed;
+        was_pressed = pressed;
         pressed = pressed_;
     };
-    bool isPressed(ButtonState state = ButtonState::DEFAULT) const
+    bool is_pressed(button_state state = button_state::default_state) const
     {
         switch (state)
         {
-        case ButtonState::DEFAULT:
+        case button_state::default_state:
             return pressed;
-        case ButtonState::UP_EDGE:
-            return !pressed && wasPressed;
-        case ButtonState::DOWN_EDGE:
-            return pressed && !wasPressed;
-        case ButtonState::EDGE:
-            return pressed != wasPressed;
+        case button_state::up_edge:
+            return !pressed && was_pressed;
+        case button_state::down_edge:
+            return pressed && !was_pressed;
+        case button_state::edge:
+            return pressed != was_pressed;
         default:
             return false;
         }
@@ -45,7 +45,7 @@ public:
 private:
     uint8_t state;
     bool pressed = false;
-    bool wasPressed = false;
+    bool was_pressed = false;
 };
 
 } // namespace lura::input

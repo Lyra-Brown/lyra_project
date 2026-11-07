@@ -4,7 +4,7 @@
 
 ## 構成
 
-- [`include/lyra_lib/PID.hpp`](include/lyra_lib/PID.hpp)
+- [`include/lyra_lib/pid.hpp`](include/lyra_lib/pid.hpp)
   - `pos_pid_controller<T>`: 位置形式PID制御
   - `vel_pid_controller<T>`: 速度形式PID制御
 - [`include/lyra_lib/limiter.hpp`](include/lyra_lib/limiter.hpp)
@@ -28,7 +28,7 @@ const float output = output_limiter.set_value(1.5f);
 ## PID controller
 
 ```cpp
-#include "lyra_lib/PID.hpp"
+#include "lyra_lib/pid.hpp"
 
 pos_pid_controller<float> controller;
 controller.set_gains(1.0f, 0.1f, 0.01f);
