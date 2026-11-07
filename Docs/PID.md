@@ -10,7 +10,7 @@
 `IPIDController<T>` は、目標値と現在値の差から制御出力を計算する基底クラスです。
 実際に使用する場合は、位置形式の [`Pos_PIDController<T>`](../lyra_lib/include/lyra_lib/PID.hpp)
 または速度形式の [`Vel_PIDController<T>`](../lyra_lib/include/lyra_lib/PID.hpp) を使用します。
-入力は `Input(value, target)` に渡し、現在の出力は `Output()` で取得します。
+入力は `update(value, target)` に渡し、更新後の出力を取得します。
 
 ## 使い方
 
@@ -24,8 +24,7 @@ controller.setLimits(-1.0f, 1.0f);
 
 const float value = 0.0f;
 const float target = 1.0f;
-controller.Input(value, target);
-const float command = controller.Output();
+const float command = controller.update(value, target);
 ```
 
 `setGains()` の引数は順に比例ゲイン `Kp`、積分ゲイン `Ki`、微分ゲイン `Kd` です。
@@ -74,8 +73,8 @@ u += Kp * (e[0] - e[1])
 
 ### `Input(T value, T target)`
 
-現在値と目標値を受け取り、内部誤差と出力を更新します。
-引数の順序は `value`、`target` です。
+派生クラスが制御計算を実装するための内部フックです。
+利用時は公開メソッドの `update(value, target)` を使用してください。
 
 ### `Output()`
 
