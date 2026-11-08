@@ -9,6 +9,9 @@ add_library(lyra_general_lib STATIC
   src/rls.cpp
   src/filter.cpp
   src/accelate.cpp
+  src/covariance.cpp
+  src/dispersion.cpp
+  src/cov_matrix.cpp
 )
 
 find_package(Eigen3 QUIET NO_MODULE)
