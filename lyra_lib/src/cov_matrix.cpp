@@ -33,3 +33,6 @@ void cov_matrix<T>::calc_disp(const Eigen::Matrix<T, Eigen::Dynamic, 1> &new_dat
         matrix_(i, i) = disp[i].update(new_data(i));
     }
 }
+
+template class cov_matrix<float>;
+template class cov_matrix<double>;
