@@ -13,6 +13,7 @@ class LYRA_LIB_PUBLIC cov_matrix
 {
 public:
     explicit cov_matrix(int size);
+    ~cov_matrix() = default;
 
     Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> update(const Eigen::Matrix<T, Eigen::Dynamic, 1> &new_data);
     Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> get_matrix() const { return matrix_; }
