@@ -1,13 +1,6 @@
 #include "lyra_lib/accelate.hpp"
 
 template <typename T>
-accelerate_limiter<T>::accelerate_limiter(T max_acceleration, T max_deceleration, T dt)
-    : dt_(dt)
-{
-    accelerate_limiter_.set_limits(-max_deceleration, max_acceleration);
-}
-
-template <typename T>
 accelerate_limiter<T>::accelerate_limiter(T max_acceleration, T dt)
     : dt_(dt)
 {

@@ -10,7 +10,6 @@ class LYRA_LIB_PUBLIC accelerate_limiter
 {
 public:
     accelerate_limiter() = default;
-    accelerate_limiter(T max_acceleration, T max_deceleration, T dt = 1e-3);
     accelerate_limiter(T max_acceleration, T dt = 1e-3);
     void set_max_acceleration(T max_acceleration);
     void set_max_deceleration(T max_deceleration);
