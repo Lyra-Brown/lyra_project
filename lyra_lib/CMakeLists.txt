@@ -12,6 +12,7 @@ add_library(lyra_general_lib STATIC
   src/covariance.cpp
   src/dispersion.cpp
   src/cov_matrix.cpp
+  src/normalize.cpp
 )
 
 find_package(Eigen3 QUIET NO_MODULE)
