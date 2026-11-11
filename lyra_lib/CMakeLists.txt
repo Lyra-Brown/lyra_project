@@ -13,6 +13,7 @@ add_library(lyra_general_lib STATIC
   src/dispersion.cpp
   src/cov_matrix.cpp
   src/normalize.cpp
+  src/function.cpp
 )
 
 find_package(Eigen3 QUIET NO_MODULE)
