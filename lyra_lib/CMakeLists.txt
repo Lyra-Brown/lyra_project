@@ -16,6 +16,10 @@ add_library(lyra_general_lib STATIC
   src/function.cpp
 )
 
+set_target_properties(lyra_general_lib PROPERTIES
+  POSITION_INDEPENDENT_CODE ON
+)
+
 find_package(Eigen3 QUIET NO_MODULE)
 
 target_include_directories(lyra_general_lib PUBLIC
